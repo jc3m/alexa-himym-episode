@@ -1,8 +1,32 @@
 const Alexa = require('alexa-sdk');
 
+const episodes = require('./episodes.json');
+
+function chooseRandomEpisode(eps) {
+  return eps[Math.floor(Math.random() * eps.length)];
+}
+
 const handlers = {
   RandomEpisodeIntent() {
-    this.emit(':tell', 'Hello World');
+    const chosen = chooseRandomEpisode(episodes);
+    this.emit(':tell', `Season ${chosen.season}, episode ${chosen.episode}, ${chosen.title}`);
+  },
+  RandomEpisodeRatingIntent() {
+    const intent = this.event.request.intent;
+    let rating = +intent.slots.rating.value;
+    let decimal = +intent.slots.decimal.value;
+    if (decimal) {
+      while (decimal >= 1) {
+        decimal /= 10;
+      }
+      rating += decimal;
+    }
+    const filteredEpisodes = episodes.filter(ep => ep.rating > rating);
+    if (filteredEpisodes.length === 0) {
+      this.emit(':tell', `There are no episodes with a rating higher than ${rating}`);
+    }
+    const chosen = chooseRandomEpisode(filteredEpisodes);
+    this.emit(':tell', `Season ${chosen.season}, episode ${chosen.episode}, ${chosen.title}`);
   },
 };
 
