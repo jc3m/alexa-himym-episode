@@ -3,10 +3,11 @@
 
 // require modules 
 const fs = require('fs');
+const path = require('path');
 const archiver = require('archiver');
 
 // create a file to stream archive data to. 
-const output = fs.createWriteStream(`${__dirname}/bundle.zip`);
+const output = fs.createWriteStream(path.join(__dirname, '..', 'bundle.zip'));
 const archive = archiver('zip', {
   zlib: { level: 9 }, // Sets the compression level. 
 });
@@ -35,8 +36,7 @@ archive.on('error', (err) => {
 // pipe archive data to the file 
 archive.pipe(output);
 
-archive.file(`${__dirname}/index.js`, { name: 'index.js' });
-archive.file(`${__dirname}/package.json`, { name: 'package.json' });
+archive.directory(path.join(__dirname, '..', 'src'), false);
 
 // finalize the archive (ie we are done appending files but streams have to finish yet) 
 archive.finalize();
