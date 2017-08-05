@@ -1,0 +1,30 @@
+{
+  "name": "alexa-himym-episode",
+  "version": "1.0.0",
+  "description": "Alexa skill to choose a random How I Met Your Mother episode",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo \"Run npm run zip to bundle this project for uploads\"",
+    "zip": "node ./zip.js",
+    "bundle": "npm run zip"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jc3m/alexa-himym-episode.git"
+  },
+  "author": "Jonathan Xu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jc3m/alexa-himym-episode/issues"
+  },
+  "homepage": "https://github.com/jc3m/alexa-himym-episode#readme",
+  "dependencies": {
+    "alexa-sdk": "^1.0.11"
+  },
+  "devDependencies": {
+    "archiver": "^2.0.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
