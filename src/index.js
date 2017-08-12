@@ -6,7 +6,15 @@ function chooseRandomEpisode(eps) {
   return eps[Math.floor(Math.random() * eps.length)];
 }
 
+const HELP_RESPONSE = 'You can say, random episode, or specify a minimum rating by saying, random episode with rating above eight point seven';
+
 const handlers = {
+  LaunchRequest() {
+    this.emit('RandomEpisodeIntent');
+  },
+  'AMAZON.HelpIntent': function HelpIntent() {
+    this.emit(':tell', HELP_RESPONSE);
+  },
   RandomEpisodeIntent() {
     const chosen = chooseRandomEpisode(episodes);
     this.emit(':tell', `Season ${chosen.season}, episode ${chosen.episode}, ${chosen.title}`);
